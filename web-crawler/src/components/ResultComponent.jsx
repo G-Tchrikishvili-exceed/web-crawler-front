@@ -1,5 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
+import CrawledItemComponent from './CrawledItemComponent';
 
 export default function CrawlerComponent() {
   return (
@@ -7,7 +8,7 @@ export default function CrawlerComponent() {
       <Grid item xs={12}>
         <h1>Crawled Results:</h1>
         <div className='content'>
-          <p>NOTHING FOUND</p>
+          <CrawledItemComponent />
         </div>
       </Grid>
     </Grid>

@@ -14,10 +14,10 @@ body {
 }
 .crawler-box-parent {
   width: 100%;
-  height: calc(100vh - 64px);
+  padding-top: 64px;
+  padding-bottom: 64px;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 .crawler-box {
   background-color: white;
@@ -53,21 +53,27 @@ body {
 .crawled-list {
   padding-top: 50px;
 }
+.crawled-item .header th,
 .crawled-list .header th {
   color: #3f51b5;
   font-weight: bold;
   font-size: 20px;
 }
+.crawled-item a,
 .crawled-list a {
   color: #c51162;
   transition: 0.2s;
 }
+.crawled-item a:hover,
 .crawled-list a:hover {
   color: #3f51b5;
 }
 /* .crawled-list a:visited {
   color: #3f51b5;
 } */
+.crawled-item .MuiTableContainer-root {
+  margin-bottom: 40px;
+}
 
 .lds-ellipsis-container {
   background-color: white;
@@ -136,4 +142,23 @@ body {
   100% {
     transform: translate(24px, 0);
   }
+}
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c51162;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #3f51b5;
 }

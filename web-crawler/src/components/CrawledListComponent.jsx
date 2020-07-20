@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Container } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import DialogComponent from './DialogComponent';
 
 const useStyles = makeStyles({
   table: {
@@ -32,7 +34,11 @@ const rows = [
 
 export default function CrawledListComponent() {
   const classes = useStyles();
+  const [IsDialogOPen, setIsDialogOPen] = useState(false);
 
+  const toggleDialog = () => {
+    setIsDialogOPen(!IsDialogOPen);
+  };
   return (
     <Container className='crawled-list'>
       <TableContainer component={Paper}>
@@ -45,15 +51,17 @@ export default function CrawledListComponent() {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.name}>
+              <TableRow key={uuidv4()}>
                 <TableCell component='th' scope='row'>
-                  <a href={row.url}>{row.url}</a>
+                  <a href={row.url} rel='noopener noreferrer' target='_blank'>
+                    {row.url}
+                  </a>
                 </TableCell>
                 <TableCell align='right'>
                   <Button
                     variant='outlined'
                     color='primary'
-                    onClick={(e) => e.preventDefault()}
+                    onClick={toggleDialog}
                   >
                     See More
                   </Button>
@@ -63,6 +71,11 @@ export default function CrawledListComponent() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <DialogComponent
+        setIsDialogOPen={setIsDialogOPen}
+        IsDialogOPen={IsDialogOPen}
+      />
     </Container>
   );
 }
