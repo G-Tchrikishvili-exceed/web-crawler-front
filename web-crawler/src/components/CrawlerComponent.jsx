@@ -56,6 +56,7 @@ export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
           },
         })
         .then((res) => {
+          console.log(res);
           updateSingleCrawl(res.data.result);
           setLoading(false);
           setHasCrawled(true);
