@@ -4,6 +4,7 @@ import axios from 'axios';
 import NavComponent from './components/NavComponent';
 import CrawlerComponent from './components/CrawlerComponent';
 import CrawledListComponent from './components/CrawledListComponent';
+import { apiUrl } from './url';
 import './App.css';
 
 export default class App extends Component {
@@ -14,7 +15,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    axios.get('http://localhost:5000/page-content/all-crawled').then((res) => {
+    axios.get(`${apiUrl}/page-content/all-crawled`).then((res) => {
       const crawledItems = res.data.crawledItems;
       this.setState({ crawledItems });
     });

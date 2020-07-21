@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import LoaderComponent from './LoaderComponent';
 import ResultComponent from './ResultComponent';
 import axios from 'axios';
+import { apiUrl } from '../url';
 
 export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
   const [InputValue, setInputValue] = useState('');
@@ -49,7 +50,7 @@ export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
     if (InputError === '' && InputValue.trim() !== '') {
       setLoading(true);
       axios
-        .get('http://localhost:5000/page-content', {
+        .get(`${apiUrl}/page-content`, {
           params: {
             url: InputValue,
           },
