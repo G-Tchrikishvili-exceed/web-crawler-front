@@ -2,13 +2,13 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import CrawledItemComponent from './CrawledItemComponent';
 
-export default function CrawlerComponent() {
+export default function CrawlerComponent({ crawledItem }) {
   return (
     <Grid container spacing={0} className='result'>
       <Grid item xs={12}>
-        <h1>Crawled Results:</h1>
+        <h1>Crawled Results for: {crawledItem.url}</h1>
         <div className='content'>
-          <CrawledItemComponent />
+          <CrawledItemComponent crawledItem={crawledItem} />
         </div>
       </Grid>
     </Grid>

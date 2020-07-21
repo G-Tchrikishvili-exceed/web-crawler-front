@@ -29,7 +29,7 @@ body {
   transition: 1.4s;
 }
 .crawler-box.crawled {
-  max-height: 2000px;
+  max-height: 100000px;
 }
 .submit-crawl {
   width: 100%;

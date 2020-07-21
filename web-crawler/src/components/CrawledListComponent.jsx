@@ -18,26 +18,33 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(url) {
-  return { url };
-}
+// function createData(url) {
+//   return { url };
+// }
 
-const rows = [
-  createData('https://material-ui.com/components/text-fields/'),
-  createData(
-    'https://blog.logrocket.com/how-to-build-a-web-crawler-with-node/'
-  ),
-  createData(
-    'https://blog.logrocket.com/how-to-build-a-web-crawler-with-node/'
-  ),
-];
+// const rows = [
+//   createData('https://material-ui.com/components/text-fields/'),
+//   createData(
+//     'https://blog.logrocket.com/how-to-build-a-web-crawler-with-node/'
+//   ),
+//   createData(
+//     'https://blog.logrocket.com/how-to-build-a-web-crawler-with-node/'
+//   ),
+// ];
 
-export default function CrawledListComponent() {
+export default function CrawledListComponent({
+  updateSingleCrawl,
+  crawledItems,
+  crawledItem,
+}) {
   const classes = useStyles();
   const [IsDialogOPen, setIsDialogOPen] = useState(false);
 
-  const toggleDialog = () => {
+  const toggleDialog = (id) => {
+    const crawledSingleitem = crawledItems.filter((item) => item._id === id);
+    const crawledSingleitemToPass = crawledSingleitem[0];
     setIsDialogOPen(!IsDialogOPen);
+    updateSingleCrawl(crawledSingleitemToPass, false);
   };
   return (
     <Container className='crawled-list'>
@@ -50,24 +57,26 @@ export default function CrawledListComponent() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={uuidv4()}>
-                <TableCell component='th' scope='row'>
-                  <a href={row.url} rel='noopener noreferrer' target='_blank'>
-                    {row.url}
-                  </a>
-                </TableCell>
-                <TableCell align='right'>
-                  <Button
-                    variant='outlined'
-                    color='primary'
-                    onClick={toggleDialog}
-                  >
-                    See More
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {crawledItems &&
+              crawledItems.length > 0 &&
+              crawledItems.map((row) => (
+                <TableRow key={uuidv4()}>
+                  <TableCell component='th' scope='row'>
+                    <a href={row.url} rel='noopener noreferrer' target='_blank'>
+                      {row.url}
+                    </a>
+                  </TableCell>
+                  <TableCell align='right'>
+                    <Button
+                      variant='outlined'
+                      color='primary'
+                      onClick={() => toggleDialog(row._id)}
+                    >
+                      See More
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -75,6 +84,7 @@ export default function CrawledListComponent() {
       <DialogComponent
         setIsDialogOPen={setIsDialogOPen}
         IsDialogOPen={IsDialogOPen}
+        crawledItem={crawledItem}
       />
     </Container>
   );

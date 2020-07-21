@@ -18,7 +18,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CrawledItemComponent() {
+export default function CrawledItemComponent({ crawledItem }) {
+  const { h1, h2, h3, links } = crawledItem;
   const classes = useStyles();
   return (
     <div className='crawled-item'>
@@ -30,16 +31,14 @@ export default function CrawledItemComponent() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow key={uuidv4()}>
-              <TableCell component='th' scope='row'>
-                Standard form attributes are supported
-              </TableCell>
-            </TableRow>
-            <TableRow key={uuidv4()}>
-              <TableCell component='th' scope='row'>
-                Standard form attributes are supported
-              </TableCell>
-            </TableRow>
+            {h1 &&
+              h1.map((item) => (
+                <TableRow key={uuidv4()}>
+                  <TableCell component='th' scope='row'>
+                    {item}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -51,16 +50,14 @@ export default function CrawledItemComponent() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow key={uuidv4()}>
-              <TableCell component='th' scope='row'>
-                Standard form attributes are supported
-              </TableCell>
-            </TableRow>
-            <TableRow key={uuidv4()}>
-              <TableCell component='th' scope='row'>
-                Standard form attributes are supported
-              </TableCell>
-            </TableRow>
+            {h2 &&
+              h2.map((item) => (
+                <TableRow key={uuidv4()}>
+                  <TableCell component='th' scope='row'>
+                    {item}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -72,16 +69,14 @@ export default function CrawledItemComponent() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow key={uuidv4()}>
-              <TableCell component='th' scope='row'>
-                Standard form attributes are supported
-              </TableCell>
-            </TableRow>
-            <TableRow key={uuidv4()}>
-              <TableCell component='th' scope='row'>
-                Standard form attributes are supported
-              </TableCell>
-            </TableRow>
+            {h3 &&
+              h3.map((item) => (
+                <TableRow key={uuidv4()}>
+                  <TableCell component='th' scope='row'>
+                    {item}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -93,20 +88,16 @@ export default function CrawledItemComponent() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow key={uuidv4()}>
-              <TableCell component='th' scope='row'>
-                <a href='http://' target='_blank' rel='noopener noreferrer'>
-                  Standard form attributes are supported
-                </a>
-              </TableCell>
-            </TableRow>
-            <TableRow key={uuidv4()}>
-              <TableCell component='th' scope='row'>
-                <a href='http://' target='_blank' rel='noopener noreferrer'>
-                  Standard form attributes are supported
-                </a>
-              </TableCell>
-            </TableRow>
+            {links &&
+              links.map((item) => (
+                <TableRow key={uuidv4()}>
+                  <TableCell component='th' scope='row'>
+                    <a href={item} target='_blank' rel='noopener noreferrer'>
+                      {item}
+                    </a>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

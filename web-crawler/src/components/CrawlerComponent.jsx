@@ -9,8 +9,9 @@ import { Container } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import LoaderComponent from './LoaderComponent';
 import ResultComponent from './ResultComponent';
+import axios from 'axios';
 
-export default function CrawlerComponent() {
+export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
   const [InputValue, setInputValue] = useState('');
   const [InputError, setInputError] = useState('');
   const [HasCrawled, setHasCrawled] = useState(false);
@@ -31,7 +32,6 @@ export default function CrawlerComponent() {
   }
 
   const checkInput = (text) => {
-    console.log(text);
     if (text && !text.trim('')) return setInputError('');
 
     if (!validURL(InputValue) && InputValue) {
@@ -42,16 +42,23 @@ export default function CrawlerComponent() {
     }
   };
 
-  const CrawlUrl = (e) => {
+  const CrawlUrl = async (e) => {
     setHasCrawled(false);
     e.preventDefault();
     input.current.focus();
     if (InputError === '' && InputValue.trim() !== '') {
       setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-        setHasCrawled(true);
-      }, 5000);
+      axios
+        .get('http://localhost:5000/page-content', {
+          params: {
+            url: InputValue,
+          },
+        })
+        .then((res) => {
+          updateSingleCrawl(res.data.result);
+          setLoading(false);
+          setHasCrawled(true);
+        });
     } else {
       setInputValue('');
       setInputError('');
@@ -94,7 +101,7 @@ export default function CrawlerComponent() {
               </Button>
             </Grid>
           </Grid>
-          {HasCrawled && <ResultComponent />}
+          {HasCrawled && <ResultComponent crawledItem={crawledItem} />}
         </Container>
       </div>
     </form>

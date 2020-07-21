@@ -30,7 +30,7 @@ export default function ButtonAppBar() {
           <Typography variant='h6' className={classes.title}>
             Web Crawler
           </Typography>
-          <Link to='/crawler'>
+          <Link to='/'>
             <Button color='inherit'>crawl</Button>
           </Link>
           <Link to='/crawledList'>
