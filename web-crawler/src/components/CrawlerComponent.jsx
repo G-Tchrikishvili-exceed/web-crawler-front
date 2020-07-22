@@ -55,7 +55,7 @@ export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
         setLoading(true);
         axios
           .post(
-            `${apiUrl}/page-content`,
+            `${apiUrl}/`,
             {
               url: InputValue,
             },

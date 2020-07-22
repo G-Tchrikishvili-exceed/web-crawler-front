@@ -17,7 +17,7 @@ export default class App extends Component {
 
   componentDidMount() {
     axios
-      .get(`${apiUrl}/page-content/all`, {
+      .get(`${apiUrl}/get-all`, {
         timeout: 10000,
       })
       .then((res) => {
