@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,55 +10,35 @@ import Paper from '@material-ui/core/Paper';
 import { Container } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import DialogComponent from './DialogComponent';
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
-
-// function createData(url) {
-//   return { url };
-// }
-
-// const rows = [
-//   createData('https://material-ui.com/components/text-fields/'),
-//   createData(
-//     'https://blog.logrocket.com/how-to-build-a-web-crawler-with-node/'
-//   ),
-//   createData(
-//     'https://blog.logrocket.com/how-to-build-a-web-crawler-with-node/'
-//   ),
-// ];
+import LoaderComponent from './LoaderComponent';
 
 export default function CrawledListComponent({
   updateSingleCrawl,
   crawledItems,
   crawledItem,
+  isLoading,
 }) {
-  const classes = useStyles();
   const [IsDialogOPen, setIsDialogOPen] = useState(false);
 
   const toggleDialog = (id) => {
     const crawledSingleitem = crawledItems.filter((item) => item._id === id);
-    const crawledSingleitemToPass = crawledSingleitem[0];
     setIsDialogOPen(!IsDialogOPen);
-    updateSingleCrawl(crawledSingleitemToPass, false);
+    updateSingleCrawl(crawledSingleitem[0], false);
   };
   return (
     <Container className='crawled-list'>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label='simple table'>
-          <TableHead>
-            <TableRow className='header'>
-              <TableCell>Crawled URLS</TableCell>
-              <TableCell align='right'>Results</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {crawledItems &&
-              crawledItems.length > 0 &&
-              crawledItems.map((row) => (
+      {isLoading && <LoaderComponent />}
+      {crawledItems && crawledItems.length > 0 && (
+        <TableContainer component={Paper}>
+          <Table aria-label='simple table'>
+            <TableHead>
+              <TableRow className='header'>
+                <TableCell>Crawled URLS</TableCell>
+                <TableCell align='right'>Results</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {crawledItems.map((row) => (
                 <TableRow key={uuidv4()}>
                   <TableCell component='th' scope='row'>
                     <a href={row.url} rel='noopener noreferrer' target='_blank'>
@@ -68,6 +47,7 @@ export default function CrawledListComponent({
                   </TableCell>
                   <TableCell align='right'>
                     <Button
+                      className='see-more'
                       variant='outlined'
                       color='primary'
                       onClick={() => toggleDialog(row._id)}
@@ -77,10 +57,15 @@ export default function CrawledListComponent({
                   </TableCell>
                 </TableRow>
               ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+      {crawledItems && crawledItems.length === 0 && (
+        <div className='empty-result-container'>
+          <div className='not-found'> nothing crawled yet </div>
+        </div>
+      )}
       <DialogComponent
         setIsDialogOPen={setIsDialogOPen}
         IsDialogOPen={IsDialogOPen}

@@ -12,12 +12,13 @@ export default class App extends Component {
     toggle: true,
     crawledItem: {},
     crawledItems: {},
+    isLoading: true,
   };
 
   componentDidMount() {
-    axios.get(`${apiUrl}/page-content/all-crawled`).then((res) => {
+    axios.get(`${apiUrl}/page-content/all`).then((res) => {
       const crawledItems = res.data.crawledItems;
-      this.setState({ crawledItems });
+      this.setState({ crawledItems, isLoading: false });
     });
   }
 
@@ -34,6 +35,7 @@ export default class App extends Component {
   };
 
   render() {
+    const { crawledItem, crawledItems, isLoading } = this.state;
     return (
       <div className='App'>
         <Router>
@@ -43,14 +45,15 @@ export default class App extends Component {
             <Route path='/' exact>
               <CrawlerComponent
                 updateSingleCrawl={this.updateSingleCrawl}
-                crawledItem={this.state.crawledItem}
+                crawledItem={crawledItem}
               />
             </Route>
             <Route path='/crawledList'>
               <CrawledListComponent
+                isLoading={isLoading}
                 updateSingleCrawl={this.updateSingleCrawl}
-                crawledItems={this.state.crawledItems}
-                crawledItem={this.state.crawledItem}
+                crawledItems={crawledItems}
+                crawledItem={crawledItem}
               />
             </Route>
           </Switch>

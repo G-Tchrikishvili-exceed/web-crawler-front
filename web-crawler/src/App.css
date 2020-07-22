@@ -7,15 +7,33 @@
 }
 a {
   color: inherit;
+  transition: 0.2s;
 }
 body {
   background-color: #373b4e;
   color: white;
 }
+header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+}
+header .active-link {
+  color: red;
+}
+.logo {
+  color: white;
+  transition: 0.2s;
+  display: inline-block;
+  word-break: keep-all;
+}
+.logo:hover {
+  color: red;
+}
 .crawler-box-parent {
   width: 100%;
-  padding-top: 64px;
-  padding-bottom: 64px;
+  padding: 84px 20px 64px 20px;
   display: flex;
   justify-content: center;
 }
@@ -37,21 +55,32 @@ body {
 }
 .crawler-box .MuiFormHelperText-root.Mui-error {
   position: absolute;
-  right: 10px;
-  top: 20px;
+  right: 0px;
+  top: -5px;
+  font-weight: bold;
 }
 .crawler-box .result {
   padding: 40px 0;
   color: black;
 }
 .crawler-box .result h1 {
+  margin-bottom: 40px;
+}
+.crawler-box .result h1 span {
   color: #3f51b5;
+  word-break: break-all;
 }
 .crawler-box .result .content {
   font-size: 18px;
 }
 .crawled-list {
-  padding-top: 50px;
+  padding-top: 80px;
+}
+.MuiDialog-container h6 a {
+  color: #c51162;
+}
+.MuiDialog-container h6 a:hover {
+  color: #3f51b5;
 }
 .crawled-item .header th,
 .crawled-list .header th {
@@ -63,18 +92,58 @@ body {
 .crawled-list a {
   color: #c51162;
   transition: 0.2s;
+  word-break: break-all;
 }
 .crawled-item a:hover,
 .crawled-list a:hover {
   color: #3f51b5;
 }
+.see-more {
+  min-width: 120px !important;
+}
 /* .crawled-list a:visited {
   color: #3f51b5;
 } */
+.MuiTableContainer-root {
+  position: relative;
+}
 .crawled-item .MuiTableContainer-root {
   margin-bottom: 40px;
 }
-
+.scroll {
+  max-height: 371px;
+  overflow-y: scroll;
+  display: flex !important;
+}
+.scroll,
+.scroll tr,
+.scroll th {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.not-found {
+  font-size: 18px;
+  color: red;
+}
+.makeStyles-table-10 {
+  max-width: 100%;
+}
+.MuiTypography-h6 {
+  word-break: break-all;
+  padding-right: 44px;
+}
+.empty-result-container {
+  width: 100%;
+  height: calc(100vh - 170px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.empty-result-container .not-found {
+  font-size: 30px;
+  color: #f50057;
+}
 .lds-ellipsis-container {
   background-color: white;
   opacity: 0.5;
@@ -164,4 +233,21 @@ body {
 }
 .test {
   color: white;
+}
+
+@media (max-width: 500px) {
+  .MuiTypography-h6 {
+    font-size: 20px !important;
+    line-height: 22px !important;
+    max-height: 46px;
+    overflow: hidden;
+  }
+  .MuiButton-label {
+    font-size: 13px;
+    line-height: 15px;
+  }
+  .crawler-box .result h1 {
+    font-size: 20px;
+    line-height: 22px;
+  }
 }

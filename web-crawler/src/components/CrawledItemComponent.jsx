@@ -1,106 +1,14 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-// import { Container } from '@material-ui/core';
-// import Button from '@material-ui/core/Button';
-// import DialogComponent from './DialogComponent';
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
+import TableComponent from './TableComponent';
 
 export default function CrawledItemComponent({ crawledItem }) {
   const { h1, h2, h3, links } = crawledItem;
-  const classes = useStyles();
   return (
     <div className='crawled-item'>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label='h1s'>
-          <TableHead>
-            <TableRow className='header'>
-              <TableCell>H1-s Crawled</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {h1 &&
-              h1.map((item) => (
-                <TableRow key={uuidv4()}>
-                  <TableCell component='th' scope='row'>
-                    {item}
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label='h1s'>
-          <TableHead>
-            <TableRow className='header'>
-              <TableCell>H2-s Crawled</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {h2 &&
-              h2.map((item) => (
-                <TableRow key={uuidv4()}>
-                  <TableCell component='th' scope='row'>
-                    {item}
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label='h3s'>
-          <TableHead>
-            <TableRow className='header'>
-              <TableCell>H3-s Crawled</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {h3 &&
-              h3.map((item) => (
-                <TableRow key={uuidv4()}>
-                  <TableCell component='th' scope='row'>
-                    {item}
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label='h1s'>
-          <TableHead>
-            <TableRow className='header'>
-              <TableCell>Links Crawled</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {links &&
-              links.map((item) => (
-                <TableRow key={uuidv4()}>
-                  <TableCell component='th' scope='row'>
-                    <a href={item} target='_blank' rel='noopener noreferrer'>
-                      {item}
-                    </a>
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <TableComponent array={h1} text={'h1'} />
+      <TableComponent array={h2} text={'h2'} />
+      <TableComponent array={h3} text={'h3'} />
+      <TableComponent array={links} text={'links'} />
     </div>
   );
 }

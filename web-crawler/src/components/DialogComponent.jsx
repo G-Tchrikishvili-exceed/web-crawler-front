@@ -12,7 +12,7 @@ const styles = (theme) => ({
   root: {
     margin: 0,
     padding: theme.spacing(2),
-    color: '#c51162',
+    color: '#3f51b5',
   },
   closeButton: {
     position: 'absolute',
@@ -46,26 +46,11 @@ const DialogContent = withStyles((theme) => ({
   },
 }))(MuiDialogContent);
 
-// const DialogActions = withStyles((theme) => ({
-//   root: {
-//     margin: 0,
-//     padding: theme.spacing(1),
-//   },
-// }))(MuiDialogActions);
-
 export default function CustomizedDialogs({
   crawledItem,
   setIsDialogOPen,
   IsDialogOPen,
 }) {
-  //   const [open, setOpen] = useState(IsDialogOPen);
-
-  //   //   const handleClickOpen = () => {
-  //   //     setOpen(true);
-  //   //   };
-  //   const handleClose = () => {
-  //     setOpen(false);
-  //   };
   return (
     <div>
       <Dialog
@@ -79,7 +64,10 @@ export default function CustomizedDialogs({
           id='customized-dialog-title'
           onClose={() => setIsDialogOPen(!IsDialogOPen)}
         >
-          crawl results for: {crawledItem.url}
+          crawl results for:{' '}
+          <a href={crawledItem.url} target='_blank' rel='noopener noreferrer'>
+            {crawledItem.url}
+          </a>
         </DialogTitle>
         <DialogContent dividers>
           <CrawledItemComponent crawledItem={crawledItem} />

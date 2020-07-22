@@ -4,9 +4,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { Link } from 'react-router-dom';
-// import IconButton from '@material-ui/core/IconButton';
-// import MenuIcon from '@material-ui/icons/Menu';
+import { NavLink as Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,12 +26,14 @@ export default function ButtonAppBar() {
       <AppBar position='static'>
         <Toolbar>
           <Typography variant='h6' className={classes.title}>
-            Web Crawler
+            <Link to='/' className='logo'>
+              Web Crawler
+            </Link>
           </Typography>
-          <Link to='/'>
+          <Link to='/' exact activeClassName='active-link'>
             <Button color='inherit'>crawl</Button>
           </Link>
-          <Link to='/crawledList'>
+          <Link to='/crawledList' activeClassName='active-link'>
             <Button color='inherit'>crawled List</Button>
           </Link>
         </Toolbar>

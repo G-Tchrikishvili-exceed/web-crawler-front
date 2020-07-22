@@ -1,8 +1,4 @@
 import React, { useState, useRef } from 'react';
-// import Input from '@material-ui/core/Input';
-// import InputLabel from '@material-ui/core/InputLabel';
-// import InputAdornment from '@material-ui/core/InputAdornment';
-// import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { Container } from '@material-ui/core';
@@ -17,10 +13,12 @@ export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
   const [InputError, setInputError] = useState('');
   const [HasCrawled, setHasCrawled] = useState(false);
   const [Loading, setLoading] = useState(false);
+  const [ButtonAccess, setButtonAccess] = useState(false);
   const input = useRef(null);
 
   function validURL(url) {
     var pattern = new RegExp(
+      '^$|s-|' +
       '^(https?:\\/\\/)' + // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
       '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
@@ -32,43 +30,57 @@ export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
     return !!pattern.test(url);
   }
 
-  const checkInput = (text) => {
-    if (text && !text.trim('')) return setInputError('');
-
+  const checkInput = () => {
     if (!validURL(InputValue) && InputValue) {
       setInputError('invalid url');
+      setButtonAccess(false);
+      input.current.focus();
     } else {
       setInputError('');
-      return true;
+      setButtonAccess(true);
+    }
+
+    if (InputValue.length === 0) {
+      setInputError('');
+      setButtonAccess(false);
     }
   };
 
   const CrawlUrl = async (e) => {
-    setHasCrawled(false);
-    e.preventDefault();
-    input.current.focus();
-    if (InputError === '' && InputValue.trim() !== '') {
-      setLoading(true);
-      axios
-        .get(`${apiUrl}/page-content`, {
-          params: {
-            url: InputValue,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          updateSingleCrawl(res.data.result);
-          setHasCrawled(true);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-          setInputError('nothing found on this url');
-        });
-    } else {
-      setInputValue('');
-      setInputError('');
+    try {
+      setHasCrawled(false);
+      e.preventDefault();
+      input.current.focus();
+      if (InputError !== 'invalid url' && InputValue.trim() !== '') {
+        setLoading(true);
+        axios
+          .post(
+            `${apiUrl}/page-content`,
+            {
+              url: InputValue,
+            },
+            { timeout: 10000 }
+          )
+          .then((res) => {
+            updateSingleCrawl(res.data.result);
+            setHasCrawled(true);
+            setLoading(false);
+            setInputValue('');
+            setButtonAccess(false);
+          })
+          .catch((err) => {
+            setLoading(false);
+            if (err.message === 'Request failed with status code 500') {
+              return setInputError('nothing found on this url');
+            }
+            setInputError(`sorry... :( no response from server`);
+          });
+      } else {
+        setInputValue('');
+        setInputError('');
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
@@ -78,8 +90,8 @@ export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
           className={HasCrawled ? 'crawler-box crawled' : 'crawler-box'}
         >
           {Loading && <LoaderComponent />}
-          <Grid container spacing={0}>
-            <Grid item xs={10}>
+          <Grid container spacing={2}>
+            <Grid item xs={7} md={10}>
               <TextField
                 id='crawler'
                 inputRef={input}
@@ -97,8 +109,9 @@ export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
                 }}
               />
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={5} md={2}>
               <Button
+                disabled={!ButtonAccess ? true : false}
                 type='submit'
                 className='submit-crawl'
                 variant='contained'
