@@ -31,7 +31,7 @@ export default function TableComponent({ text, array }) {
           {array && array.length === 0 && (
             <TableRow key={uuidv4()}>
               <TableCell component='th' scope='row'>
-                <span className='not-found'>no {text} tags found</span>
+                <span className='not-found'>no {text}-s found</span>
               </TableCell>
             </TableRow>
           )}

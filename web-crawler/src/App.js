@@ -11,15 +11,22 @@ export default class App extends Component {
   state = {
     toggle: true,
     crawledItem: {},
-    crawledItems: {},
+    crawledItems: [],
     isLoading: true,
   };
 
   componentDidMount() {
-    axios.get(`${apiUrl}/page-content/all`).then((res) => {
-      const crawledItems = res.data.crawledItems;
-      this.setState({ crawledItems, isLoading: false });
-    });
+    axios
+      .get(`${apiUrl}/page-content/all`, {
+        timeout: 10000,
+      })
+      .then((res) => {
+        const crawledItems = res.data.crawledItems;
+        this.setState({ crawledItems, isLoading: false });
+      })
+      .catch((err) => {
+        this.setState({ isLoading: false });
+      });
   }
 
   updateSingleCrawl = (crawledItem, updateCrawledItemsToo = true) => {

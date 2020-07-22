@@ -61,7 +61,7 @@ export default function CrawledListComponent({
           </Table>
         </TableContainer>
       )}
-      {crawledItems && crawledItems.length === 0 && (
+      {!isLoading && crawledItems && crawledItems.length === 0 && (
         <div className='empty-result-container'>
           <div className='not-found'> nothing crawled yet </div>
         </div>
