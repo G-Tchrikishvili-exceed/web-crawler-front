@@ -21,7 +21,7 @@ export default class App extends Component {
         timeout: 10000,
       })
       .then((res) => {
-        const crawledItems = res.data.crawledItems;
+        const crawledItems = res.data;
         this.setState({ crawledItems, isLoading: false });
       })
       .catch((err) => {

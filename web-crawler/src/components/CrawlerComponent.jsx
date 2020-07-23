@@ -62,7 +62,7 @@ export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
             { timeout: 10000 }
           )
           .then((res) => {
-            updateSingleCrawl(res.data.result);
+            updateSingleCrawl(res.data);
             setHasCrawled(true);
             setLoading(false);
             setInputValue('');
