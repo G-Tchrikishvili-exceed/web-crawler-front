@@ -80,7 +80,7 @@ export default function CrawlerComponent({ updateSingleCrawl, crawledItem }) {
         setInputError('');
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   return (

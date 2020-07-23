@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import TableContainer from '@material-ui/core/TableContainer';
 
 export default function TableComponent({ text, array }) {
-  console.log(text, array);
   return (
     <TableContainer component={Paper}>
       <Table aria-label={`${text}s`}>
