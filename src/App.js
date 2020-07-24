@@ -17,7 +17,7 @@ export default class App extends Component {
 
   componentDidMount() {
     axios
-      .get(`${apiUrl}/get-all`, {
+      .get(`${apiUrl}/all`, {
         timeout: 10000,
       })
       .then((res) => {
@@ -31,7 +31,7 @@ export default class App extends Component {
 
   updateSingleCrawl = (crawledItem, updateCrawledItemsToo = true) => {
     if (updateCrawledItemsToo) {
-      this.setState({
+      return this.setState({
         crawledItem,
         crawledItems: [...this.state.crawledItems, { ...crawledItem }],
       });
